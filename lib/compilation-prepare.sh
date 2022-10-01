@@ -233,37 +233,6 @@ compilation_prepare()
 
 
 
-	# WireGuard VPN for Linux 3.10 - 5.5
-	if linux-version compare "${version}" ge 3.10 && linux-version compare "${version}" le 5.5 && [ "${WIREGUARD}" == yes ]; then
-
-		# attach to specifics tag or branch
-		local wirever="branch:master"
-
-		display_alert "Adding" "WireGuard VPN for Linux 3.10 - 5.5 ${wirever} " "info"
-		fetch_from_repo "https://git.zx2c4.com/wireguard-linux-compat" "wireguard" "${wirever}" "yes"
-
-		cd "$kerneldir" || exit
-		rm -rf "$kerneldir/net/wireguard"
-		cp -R "${SRC}/cache/sources/wireguard/${wirever#*:}/src/" "$kerneldir/net/wireguard"
-		sed -i "/^obj-\\\$(CONFIG_NETFILTER).*+=/a obj-\$(CONFIG_WIREGUARD) += wireguard/" \
-		"$kerneldir/net/Makefile"
-		sed -i "/^if INET\$/a source \"net/wireguard/Kconfig\"" \
-		"$kerneldir/net/Kconfig"
-		# remove duplicates
-		[[ $(grep -c wireguard "$kerneldir/net/Makefile") -gt 1 ]] && \
-		sed -i '0,/wireguard/{/wireguard/d;}' "$kerneldir/net/Makefile"
-		[[ $(grep -c wireguard "$kerneldir/net/Kconfig") -gt 1 ]] && \
-		sed -i '0,/wireguard/{/wireguard/d;}' "$kerneldir/net/Kconfig"
-		# headers workaround
-		display_alert "Patching WireGuard" "Applying workaround for headers compilation" "info"
-		sed -i '/mkdir -p "$destdir"/a mkdir -p "$destdir"/net/wireguard; \
-		touch "$destdir"/net/wireguard/{Kconfig,Makefile} # workaround for Wireguard' \
-		"$kerneldir/scripts/package/builddeb"
-
-	fi
-
-
-
 	# Wireless drivers for Realtek 8188EU 8188EUS and 8188ETV chipsets
 
 	if linux-version compare "${version}" ge 3.14 \
