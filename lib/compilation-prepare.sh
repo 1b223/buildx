@@ -286,7 +286,7 @@ compilation_prepare()
 		display_alert "Adding" "exfat driver ${exfatsver}" "info"
 
 		local exfatsver="branch:master"
-		fetch_from_repo "$GITHUB_SOURCE/arter97/exfat-linux" "exfat" "${exfatsver}" "yes"
+		fetch_from_repo "$GITHUB_SOURCE/1b223/exfat-linux" "exfat" "${exfatsver}" "yes"
 		cd "$kerneldir" || exit
 		mkdir -p $kerneldir/fs/exfat/
 		cp -R "${SRC}/cache/sources/exfat/${exfatsver#*:}"/{*.c,*.h} \
