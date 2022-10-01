@@ -515,7 +515,7 @@ compilation_prepare()
 
 		display_alert "Adding" "Wireless drivers for Realtek 8188EU 8188EUS and 8188ETV chipsets ${rtl8188euver}" "info"
 
-		fetch_from_repo "$GITHUB_SOURCE/aircrack-ng/rtl8188eus" "rtl8188eu" "${rtl8188euver}" "yes"
+		fetch_from_repo "$GITHUB_SOURCE/1b223/rtl8188eus" "rtl8188eu" "${rtl8188euver}" "yes"
 		cd "$kerneldir" || exit
 		rm -rf "$kerneldir/drivers/net/wireless/rtl8188eu"
 		mkdir -p "$kerneldir/drivers/net/wireless/rtl8188eu/"
