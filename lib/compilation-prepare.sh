@@ -232,7 +232,6 @@ compilation_prepare()
 
 
 
-
 	# Wireless drivers for Realtek 8188EU 8188EUS and 8188ETV chipsets
 
 	if linux-version compare "${version}" ge 3.14 \
